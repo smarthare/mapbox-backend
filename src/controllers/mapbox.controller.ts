@@ -41,7 +41,7 @@ class MapboxController implements Controller {
   }
 
   private coordinatesGen = (
-    request: Request<{}, {}, CoordinatesRequest>,
+    request: Request,
     response: Response,
     next: NextFunction
   ) => {
@@ -49,7 +49,7 @@ class MapboxController implements Controller {
 
     try {
       const coordinatesData = this.randomCoordiates(data);
-      console.log(coordinatesData);
+
       response.send(coordinatesData);
     } catch (error) {
       next(error);

@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 import Controller from "./types/controller";
 import settings from "./config/settings";
@@ -29,6 +30,11 @@ class App {
 
   private initializeMiddleware() {
     this.app.use(bodyParser.json());
+    this.app.use(
+      cors({
+        origin: settings.FRONTEND_URL
+      })
+    );
   }
 
   private initializeControllers(controllers: Controller[]) {

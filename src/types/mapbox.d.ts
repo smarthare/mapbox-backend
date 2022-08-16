@@ -1,10 +1,11 @@
 export type MapboxPoint = {
-  x: number;
-  y: number;
+  lng: number;
+  lat: number;
 };
 
 export type CoordinatesRequest = {
-  point1: MapboxPoint;
-  point2: MapboxPoint;
+  width: number;
+  height: number;
+  center: MapboxPoint;
   count: number;
 };

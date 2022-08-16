@@ -15,7 +15,7 @@ class MapboxController implements Controller {
   private initializeRoutes() {
     /**
      * @openapi
-     * '/api/v1/mapbox/coordinates':
+     * '/api/mapbox/coordinates':
      *  post:
      *     tags:
      *     - CoordinatesGenerator
@@ -32,7 +32,7 @@ class MapboxController implements Controller {
      *        content:
      *          application/json:
      *            schema:
-     *              $ref: '#/components/schemas/GenerateCoordinatesRequest'
+     *              $ref: '#/components/schemas/GenerateCoordinatesResponse'
      *      400:
      *        description: Bad request
      */
@@ -62,19 +62,16 @@ class MapboxController implements Controller {
     }
 
     return [...Array(data.count)].map(() => ({
-      x: this.generateRandomNumber(data.point1.x, data.point2.x),
-      y: this.generateRandomNumber(data.point1.y, data.point2.y),
+      lng: this.generateRandomNumber(data.width, data.center.lng),
+      lat: this.generateRandomNumber(data.height, data.center.lat),
     }));
   };
 
-  private generateRandomNumber = (min: number, max: number) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
+  private generateRandomNumber = (size: number, center: number) =>
+    center - Math.random() * size / 2000 * (Math.random() >= 0.5 ? 1 : -1);
 
   private vaildateBoxData = (data: CoordinatesRequest) =>
-    data.point1.x >= 0 &&
-    data.point1.y >= 0 &&
-    data.point1.x < data.point2.x &&
-    data.point1.y < data.point2.y;
+    data.width > 0 && data.height > 0 && data.count > 0;
 }
 
 export default MapboxController;

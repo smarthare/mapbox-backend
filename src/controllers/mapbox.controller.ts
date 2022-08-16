@@ -68,10 +68,15 @@ class MapboxController implements Controller {
   };
 
   private generateRandomNumber = (size: number, center: number) =>
-    center - Math.random() * size / 2000 * (Math.random() >= 0.5 ? 1 : -1);
+    center - ((Math.random() * size) / 2000) * (Math.random() >= 0.5 ? 1 : -1);
 
   private vaildateBoxData = (data: CoordinatesRequest) =>
-    data.width > 0 && data.height > 0 && data.count > 0;
+    data.width > 0 &&
+    data.height > 0 &&
+    data.count > 0 &&
+    data.width <= 1200 &&
+    data.height <= 800 &&
+    data.count <= 100;
 }
 
 export default MapboxController;
